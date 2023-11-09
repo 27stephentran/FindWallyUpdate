@@ -14,7 +14,7 @@ model_path = './trained_model/frozen_inference_graph.pb'
 
 detection_graph = tf.Graph()
 with detection_graph.as_default():
-    od_graph_def = tf.compat.v1.GraphDef()()
+    od_graph_def = tf.compat.v1.GraphDef()
     with tf.io.gfile.GFile(model_path, 'rb') as fid:
         serialized_graph = fid.read()
         od_graph_def.ParseFromString(serialized_graph)
