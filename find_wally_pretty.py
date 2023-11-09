@@ -27,8 +27,8 @@ def draw_box(box, image_np):
 
 detection_graph = tf.Graph()
 with detection_graph.as_default():
-    od_graph_def = tf.GraphDef()
-    with tf.gfile.GFile(model_path, 'rb') as fid:
+    od_graph_def = tf.compat.v1.GraphDef()
+    with tf.io.gfile.GFile(model_path, 'rb') as fid:
         serialized_graph = fid.read()
         od_graph_def.ParseFromString(serialized_graph)
         tf.import_graph_def(od_graph_def, name='')
@@ -40,7 +40,7 @@ def load_image_into_numpy_array(image):
 
 
 with detection_graph.as_default():
-  with tf.Session(graph=detection_graph) as sess:
+  with tf.compat.v1.Session(graph=detection_graph) as sess:
     parser = argparse.ArgumentParser()
     parser.add_argument('image_path')
     args = parser.parse_args()

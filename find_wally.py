@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 import sys
-import tensorflow as tf
+import tensorflow as tf 
 import matplotlib
 from PIL import Image
 import matplotlib.patches as patches
@@ -14,8 +14,8 @@ model_path = './trained_model/frozen_inference_graph.pb'
 
 detection_graph = tf.Graph()
 with detection_graph.as_default():
-    od_graph_def = tf.GraphDef()
-    with tf.gfile.GFile(model_path, 'rb') as fid:
+    od_graph_def = tf.compat.v1.GraphDef()()
+    with tf.io.gfile.GFile(model_path, 'rb') as fid:
         serialized_graph = fid.read()
         od_graph_def.ParseFromString(serialized_graph)
         tf.import_graph_def(od_graph_def, name='')
@@ -30,7 +30,7 @@ categories = label_map_util.convert_label_map_to_categories(label_map, max_num_c
 category_index = label_map_util.create_category_index(categories)
 
 with detection_graph.as_default():
-  with tf.Session(graph=detection_graph) as sess:
+  with tf.compat.v1.Session(graph=detection_graph) as sess:
     parser = argparse.ArgumentParser()
     parser.add_argument('image_path')
     args = parser.parse_args()
